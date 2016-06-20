@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+<link href="{% static 'css/portfolio/detail.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="detail-wrapper" class="row">
+	<div id="detail-top">
+		<a class="bordered" href="{% url 'portfolio:list' %}">< Back to list</a>
+		<div>{{ project.title }}</div>
+		<div><small>[{{ project.start_date }} - {{ project.end_date }}]</small></div>
+		<div class="hr gray"></div>
+	</div>
+
+	<div id="detail-content" class="col-md-12">
+		{{ project.description | safe }}
+	</div>
+</div>
+{% endblock %}

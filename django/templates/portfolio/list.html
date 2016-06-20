@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+<link href="{% static 'css/portfolio/list.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div ng-controller="PortfolioController as pc" id="portfolio-wrapper" class="row">
+	<div ng-controller="MenuController as mc" class="col-md-12" id="portfolio-top">
+		<div>
+			<span id="portfolio-title">Portfolio</span>
+			<span id="portfolio-sort1">
+				<span ng-click="menuTypeChange('Year')" ng-class="getCurMenuType('Year')" class="pointer">Year</span>
+				<span> / </span>
+				<span ng-click="menuTypeChange('Platform')" ng-class="getCurMenuType('Platform')" class="pointer">Platform</span>
+			</span>
+		</div>
+		<div id="portfolio-sort2">
+			<span ng-repeat="menu in menuList" class="repeated-item">
+				<span ng-click="selectMenu(menu)" ng-class="getCurMenu(menu)" class="pointer">[[ menu.title ]]</span> <span ng-if="!$last">/</span>
+			</span>
+		</div>
+		<div class="hr red"></div>
+	</div>
+	<div class="col-md-12"></div>
+
+	<div class="col-md-12" id="portfolio-list">
+		<div ng-repeat="project in projectList" class="repeated-item">
+			<div class="portfolio-item">
+				<a href="/portfolio/[[ project.id ]]/"><p class="portfolio-item-title">[[ project.title ]]</p></a>
+				<p class="portfolio-item-period">[[ project.period ]]
+					<span class="portfolio-item-type">[[ project.project_type ]]</span>
+				</p>
+				<div class="portfolio-platform-list">
+					<span ng-repeat="platform in project.platform_list">
+						<img class="img-platform" ng-src="[[ platform.img_icon.url ]]" alt="[[ platform.title ]]" title="[[ platform.title ]]"/>
+					</span>
+				</div>
+				<p class="portfolio-item-description">[[ project.short_description ]]</p>
+			</div>
+			<div ng-if="!$last" class="hr gray"></div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+app.controller('PortfolioController', ['$http', '$scope', 'ajax', function($http, $scope, ajax) {
+	$scope.$on('emitSelectMenu', function(event, dict) {
+		$scope.selectMenu(dict);
+	});
+	$scope.selectMenu = function(dict) {
+		ajax.getModelQuery('project_list', dict, callBack);
+
+		function callBack(data) {
+			console.log(data);
+			$scope.projectList = data.data.project_list;
+		};
+	}
+}]);
+
+app.controller('MenuController', ['$http', '$scope', 'ajax', function($http, $scope, ajax) {
+	$scope.menuYearList = [
+		{title: 'All', value: 0}, 
+		{title: '2011', value: 2011},
+		{title: '2012', value: 2012},
+		{title: '2013', value: 2013},
+		{title: '2014', value: 2014},
+		{title: '2015', value: 2015},
+	];
+	$scope.menuList = $scope.menuYearList;
+
+	$scope.curMenuType = 'Year';
+	$scope.curMenu = $scope.menuYearList[0];
+
+	init();
+	function init() {
+		getMenuPlatformList();
+	};
+	function getMenuPlatformList() {
+		dict = {};
+		ajax.getModelQuery('platform_list', dict, callBack);
+		function callBack(data) {
+			$scope.menuPlatformList = data.data.platform_list;
+			$scope.menuPlatformList.splice(0, 0, {id: 0, title:'All'})
+			// 메뉴 구성 후 초기 프로젝트 데이터 가져오기
+			getInitProjectList();
+		};
+	};
+	function getInitProjectList() {
+		$scope.selectMenu($scope.menuYearList[0]);
+	};
+
+	// MenuType관련
+	$scope.menuTypeChange = function(type) {
+		if(type == 'Year') {
+			$scope.menuList = $scope.menuYearList;
+			$scope.curMenuType = 'Year';
+		}
+		else if(type == 'Platform') {
+			$scope.menuList = $scope.menuPlatformList;
+			$scope.curMenuType = 'Platform';
+		}
+		$scope.curMenu = $scope.menuList[0];
+	};
+	$scope.getCurMenuType = function(menuType) {
+		if($scope.curMenuType == menuType) {
+			return 'selected';
+		} else {
+			return 'unselected';
+		}
+	};
+
+	// Menu관련 (연도 또는 플랫폼)
+	$scope.selectMenu = function(menu) {
+		$scope.curMenu = menu;
+
+		var dict = {};
+		if(($scope.curMenuType == 'Year') && ($scope.curMenu != $scope.menuYearList[0])) {
+			dict.year = $scope.curMenu.value;
+		}
+		else if(($scope.curMenuType == 'Platform') && ($scope.curMenu != $scope.menuPlatformList[0])) {
+			dict.platform_id = $scope.curMenu.id;
+		};
+
+		$scope.$emit('emitSelectMenu', dict);
+		
+		
+	};
+	$scope.getCurMenu = function(menu) {
+		if($scope.curMenu == menu) {
+			return 'selected';
+		} else {
+			return 'unselected';
+		}
+	};
+
+
+}]);
+</script>
+
+{% endblock %}

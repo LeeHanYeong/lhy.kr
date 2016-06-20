@@ -1,0 +1,42 @@
+@media screen and (max-width: 992px) {
+  #detail-wrapper {
+    margin-top: 60px;
+  }
+}
+@media screen and (min-width: 992px) {
+  #detail-wrapper {
+    margin-top: 0px;
+  }
+}
+#detail-top {
+  z-index: 100;
+  position: fixed;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #242121;
+}
+#detail-top div {
+  font-family: HanDotum;
+}
+#detail-top div.hr {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 3px;
+}
+#detail-content {
+  z-index: 99;
+  font-family: HanDotum;
+}
+@media screen and (max-width: 992px) {
+  #detail-content {
+    margin-top: 85px;
+  }
+}
+@media screen and (min-width: 992px) {
+  #detail-content {
+    margin-top: 75px;
+  }
+}

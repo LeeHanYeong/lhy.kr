@@ -1,0 +1,46 @@
+@import (reference) "../common.less";
+
+#detail-wrapper {
+	@media screen {
+		@media (max-width: @screen-md-min) {
+			margin-top: 60px;
+		}
+		@media (min-width: @screen-md-min) {
+			margin-top: 0px;
+		}
+	}
+}
+
+#detail-top {
+	z-index: 100;
+	position: fixed;
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: @theme-black;
+
+	div {
+		font-family: HanDotum;
+		&.hr {
+			padding-left: 0px;
+			padding-right: 0px;
+			margin-top: 3px;
+		}
+	}
+
+}
+
+#detail-content {
+	z-index: 99;
+	font-family: HanDotum;
+	@media screen {
+		@media (max-width: @screen-md-min) {
+			margin-top: 85px;
+		}
+		@media (min-width: @screen-md-min) {
+			margin-top: 75px;
+		}
+	}
+}

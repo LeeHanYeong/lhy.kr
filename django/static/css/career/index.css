@@ -1,0 +1,19 @@
+#career-wrapper {
+  padding-top: 10px;
+}
+@media screen and (max-width: 992px) {
+  #career-wrapper {
+    margin-top: 60px;
+  }
+}
+@media screen and (min-width: 992px) {
+  #career-wrapper {
+    margin-top: 0px;
+  }
+}
+#career-wrapper #career-title {
+  font-size: 15pt;
+}
+#career-wrapper #career-content {
+  padding-top: 10px;
+}

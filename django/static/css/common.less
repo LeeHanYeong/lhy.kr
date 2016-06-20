@@ -1,0 +1,236 @@
+@font-face{ 
+	font-family: 'NanumGothic';
+	src: url('/static/font/NanumGothicLight.eot');
+	src: url('/static/font/NanumGothicLight.eot?#iefix') format('embedded-opentype'),
+	url('/static/font/NanumGothicLight.woff') format('woff'),
+	url('/static/font/NanumGothicLight.ttf') format('truetype'),
+}
+
+@font-face {
+	font-family: 'Dense';
+	src: url('/static/font/Dense-Regular.eot?#iefix') format('embedded-opentype'),
+	url('/static/font/Dense-Regular.otf')  format('opentype'),
+	url('/static/font/Dense-Regular.woff') format('woff'), 
+	url('/static/font/Dense-Regular.ttf')  format('truetype'), 
+	url('/static/font/Dense-Regular.svg#Dense-Regular') format('svg');
+	font-weight: 100;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'HanDotum';
+	src: 	url('/static/font/HanDotumOpt.eot');
+	src: 	url('/static/font/HanDotumOpt.eot?#iefix') format('embedded-opentype'),
+			url('/static/font/HanDotumOpt.woff') format('woff'),
+			url('/static/font/HanDotumOpt.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'HanDotum';
+	src: 	url('/static/font/HanDotumBoldOpt.eot');
+	src: 	url('/static/font/HanDotumBoldOpt.eot?#iefix') format('embedded-opentype'),
+			url('/static/font/HanDotumBoldOpt.woff') format('woff'),
+			url('/static/font/HanDotumBoldOpt.ttf') format('truetype');
+	font-weight: bold;
+}
+// @font-face {
+// 	font-family: 'BankGothic';
+// 	src: url('/static/font/BankGothicBT-Medium.eot?#iefix') format('embedded-opentype'),  
+// 	url('/static/font/BankGothicBT-Medium.woff') format('woff'), 
+// 	url('/static/font/BankGothicBT-Medium.ttf')  format('truetype'), 
+// 	url('/static/font/BankGothicBT-Medium.svg#BankGothicBT-Medium') format('svg');
+// 	font-weight: normal;
+// 	font-style: normal;
+// }
+@font-face {
+	font-family: 'BankGothic';
+	src: url('/static/font/BankGothicBT-Light.eot?#iefix') format('embedded-opentype'),  
+	url('/static/font/BankGothicBT-Light.woff') format('woff'), 
+	url('/static/font/BankGothicBT-Light.ttf')  format('truetype'), 
+	url('/static/font/BankGothicBT-Light.svg#BankGothicBT-Light') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@theme-black: #242121;
+@theme-darkgray: #707070;
+@theme-gray: #9d9d9d;
+@theme-lightgray: #bababa;
+@theme-red: #9e0b0f;
+
+@screen-sm-min: 768px;
+@screen-md-min: 992px;
+@screen-lg-min: 1200px;
+
+body {
+	font-family: BankGothic, HanDotum;
+	background-color: @theme-black;
+	color: white;
+}
+
+.hr {
+	width: 100%;
+	height: 1px;
+	&.red {
+		background-color: @theme-red;
+		height: 3px;
+	}
+	&.gray {
+		background-color: @theme-gray;
+	}
+	&.dark-gray {
+		background-color: @theme-darkgray;
+	}
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.repeated-item.ng-enter, .repeated-item.ng-move {
+	-webkit-transition:0.5s linear all;
+	-moz-transition:0.5s linear all;
+	-o-transition:0.5s linear all;
+	transition:0.5s linear all;
+	opacity:0;
+}
+.repeated-item.ng-enter.ng-enter-active,
+.repeated-item.ng-move.ng-move-active {
+  opacity:1;
+}
+
+.bordered {
+	border-width: 1px;
+	border-style: solid;
+	border-color: white;
+}
+
+.handotum {
+	font-family: HanDotum;
+}
+
+#wrapper {
+	max-height: 100%;
+	@media screen {
+		margin: 0 0 0 0;
+		@media (max-width: @screen-md-min) {
+			padding: 0;
+		}
+		@media (min-width: @screen-md-min) {
+			height: 100vh;
+			padding: 0;
+		}
+	}
+}
+
+#footer {
+	height: 40px;
+	line-height: 40px;
+
+	p {
+		font-family: Dense;
+	}
+}
+
+#menu-hr {
+	float: right;
+	margin-top: 6px;
+	margin-bottom: 4px;
+	@media screen {
+		@media (max-width: @screen-md-min) {
+			visibility: visible;
+		}
+		@media (min-width: @screen-md-min) {
+			visibility: hidden;
+		}
+	}
+
+}
+
+#menu-left {
+	z-index: 101;
+	position: fixed;
+	background-color: @theme-black;
+
+	@media screen {
+		@media (max-width: @screen-md-min) {
+			width: 100%;
+			padding: 0;
+			padding-top: 5px;
+			margin-top: 0px;
+			margin-left: 0px;
+			margin-right: 0px;
+			margin-bottom: 0px;
+			float: left;
+			height: auto;
+		}
+		@media (min-width: @screen-md-min) {
+			margin: 0;
+			top: 50%;
+			transform: translate(0, -50%);
+		}
+	}
+	
+	#menu-left-main {
+		@media screen {
+			@media (max-width: @screen-md-min) {
+				text-align: left;
+				float: left;
+			}
+			@media (min-width: @screen-md-min) {
+				
+			}
+		}
+	}
+	#menu-left-name {
+		font-family: Dense;
+		font-size: 30pt;
+		line-height: 1.0;
+		margin-bottom: -5px;
+
+		@media screen {
+			@media (max-width: @screen-md-min) {
+				text-align: left;
+			}
+			@media (min-width: @screen-md-min) {
+				
+			}
+		}
+	}
+	#menu-left-description {
+		font-family: Dense;
+		font-size: 12pt;
+		color: @theme-lightgray;
+
+		@media screen {
+			@media (max-width: @screen-md-min) {
+				text-align: left;
+			}
+			@media (min-width: @screen-md-min) {
+				
+			}
+		}
+	}
+
+	#menu-left-sub {
+		margin-top: 10px;
+		line-height: 1.0;
+
+		@media screen {
+			@media (max-width: @screen-md-min) {
+				float: right;
+				margin-top: 5px;
+
+				p {
+					text-align: right;
+					margin-top: 2px;
+				}		
+			}
+			@media (min-width: @screen-md-min) {
+
+				
+			}
+		}
+
+		
+	}
+}

@@ -1,0 +1,112 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="ko">
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- css -->
+	<!-- <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
+	<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+	<link href="{% static 'css/common.css' %}" rel="stylesheet">
+
+	<!-- js -->
+	<script src="{% static 'jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'angular/angular.min.js' %}"></script>
+	<script src="{% static 'angular-animate/angular-animate.min.js' %}"></script>
+
+	<title>{% block title %}{% endblock %}</title>
+	{% block head %}
+	{% endblock %}
+</head>
+<body>
+	<script>
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '643474015758747',
+	      xfbml      : true,
+	      version    : 'v2.2'
+	    });
+	  };
+
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
+	</script>
+	
+	<div id="wrapper" class="row">
+		<div id="menu-left" class="col-md-3">
+			<div class="col-md-12" id="menu-left-main">
+				<p id="menu-left-name" class="text-center">Lee HanYeong</p>
+				<p id="menu-left-description" class="text-center">Django, Android Programmer</p>
+			</div>
+			<div class="col-md-12" id="menu-left-sub">
+				<a href="{% url 'career' %}"><p class="text-center pointer">Career</p></a>
+				<a href="{% url 'portfolio:list' %}"><p class="text-center pointer">Portfolio</p></a>
+				<p class="text-center pointer">Blog</p>
+			</div>
+			<div id="menu-hr" class="hr gray"></div>
+		</div>
+		<div class="col-md-3"></div>
+		<div id="container" class="col-md-9">
+			
+			{% block content %}
+			{% endblock %}
+		</div>
+	</div>
+	<div id="footer">
+		<p class="text-center pointer">© 2015 Arcanelux</p>
+	</div>
+
+
+	
+	<script>
+	var app = angular.module('app', ['ngAnimate']);
+	app.config([
+		'$httpProvider',
+		'$interpolateProvider',
+		function($httpProvider, $interpolateProvider, $resourceProvider) {
+			$interpolateProvider.startSymbol('[[');
+			$interpolateProvider.endSymbol(']]');
+			$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+			$httpProvider.defaults.transformRequest = function(data){
+				if (data === undefined) {
+					return data;
+				}
+				return $.param(data);
+			};
+		}
+	]);
+
+	app.factory('ajax', function($http) {
+		return {
+			getModelQuery: getModelQuery,
+		};
+		function getModelQuery(type, dict, callBack) {
+			var params = {
+				type: type,
+				value_dict: JSON.stringify(dict),
+			};
+			console.log(params);
+
+			$http.post("{% url 'ajax:get_model_query' %}", params)
+			.success(function(data) {
+				callBack(data);
+			})
+			.error(function(data, status) {
+				var msg = type + ' Error! status:' + status + ', data:' + data;
+				console.log(msg);
+			});
+		};
+	});
+
+	</script>
+	{% block script %}
+	{% endblock %}
+</body>
+</html>
+

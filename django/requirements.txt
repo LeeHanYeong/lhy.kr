@@ -1,0 +1,9 @@
+django
+django-froala-editor
+django-allauth
+python-dateutil
+arc-library
+smarturls
+Pillow
+
+
